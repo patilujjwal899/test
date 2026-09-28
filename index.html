@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A Little Question ❤️</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #ffd6e7, #fff0f5);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  width: 92%;
+  max-width: 520px;
+  min-height: 520px;
+  background: white;
+  border-radius: 30px;
+  padding: 40px 25px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(150, 30, 80, 0.2);
+}
+
+.heart {
+  font-size: 60px;
+  animation: pulse 1.5s infinite;
+}
+
+.small {
+  color: #8b5a6b;
+  margin-top: 10px;
+}
+
+.question {
+  font-size: 38px;
+  font-weight: bold;
+  margin: 25px 0;
+  color: #3d1b2a;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  min-height: 190px;
+}
+
+.btn {
+  border: none;
+  border-radius: 50px;
+  padding: 15px 30px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.yes {
+  background: #ff4f87;
+  color: white;
+  box-shadow: 0 10px 25px rgba(255, 79, 135, 0.3);
+}
+
+.no {
+  background: #eeeeee;
+  color: #555;
+}
+
+.hint {
+  color: #987080;
+  font-size: 13px;
+}
+
+.result {
+  display: none;
+}
+
+.result h2 {
+  color: #ff4f87;
+  font-size: 40px;
+}
+
+.result p {
+  font-size: 19px;
+  line-height: 1.5;
+  color: #4a2635;
+}
+
+.confetti {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.piece {
+  position: absolute;
+  top: -30px;
+  font-size: 25px;
+  animation: fall 3s linear forwards;
+}
+
+@keyframes pulse {
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(100vh) rotate(600deg);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <div id="questionView">
+
+    <div class="heart">❤️</div>
+
+    <div class="small">
+      I have one tiny question for you...
+    </div>
+
+    <div class="question">
+      Will you be my girlfriend?
+    </div>
+
+    <div class="buttons">
+
+      <button class="btn yes" id="yes">
+        Yes ❤️
+      </button>
+
+      <button class="btn no" id="no">
+        No
+      </button>
+
+    </div>
+
+    <div class="hint">
+      (Just choose honestly 😄)
+    </div>
+
+  </div>
+
+
+  <div class="result" id="result">
+
+    <div class="heart">🥰</div>
+
+    <h2>
+      Yaaay! ❤️
+    </h2>
+
+    <p>
+      I knew this little question was worth asking. 💕
+    </p>
+
+    <p>
+      Thank you for making my day special. ❤️
+    </p>
+
+  </div>
+
+</div>
+
+<div class="confetti" id="confetti"></div>
+
+
+<script>
+
+const yes = document.getElementById("yes");
+const no = document.getElementById("no");
+
+const questionView =
+  document.getElementById("questionView");
+
+const result =
+  document.getElementById("result");
+
+const confetti =
+  document.getElementById("confetti");
+
+let scale = 1;
+
+
+// When she clicks NO
+no.addEventListener("click", function () {
+
+  scale = Math.min(scale * 1.25, 5);
+
+  yes.style.transform =
+    `scale(${scale})`;
+
+  yes.style.fontSize =
+    `${Math.min(18 * scale, 36)}px`;
+
+  yes.style.padding =
+    `${Math.min(15 * scale, 30)}px
+     ${Math.min(30 * scale, 60)}px`;
+
+  if (scale > 2) {
+    no.textContent = "Are you sure? 😅";
+  }
+
+  if (scale > 3) {
+    no.textContent = "Really? 🥺";
+  }
+
+  if (scale >= 4) {
+    no.textContent = "Okay... 😭";
+  }
+
+});
+
+
+// When she clicks YES
+yes.addEventListener("click", function () {
+
+  questionView.style.display = "none";
+
+  result.style.display = "block";
+
+  createConfetti();
+
+});
+
+
+// Confetti / hearts
+function createConfetti() {
+
+  const emojis = [
+    "❤️",
+    "💕",
+    "💖",
+    "✨",
+    "🌸",
+    "🥰",
+    "💗"
+  ];
+
+  for (let i = 0; i < 70; i++) {
+
+    const piece =
+      document.createElement("span");
+
+    piece.className = "piece";
+
+    piece.textContent =
+      emojis[i % emojis.length];
+
+    piece.style.left =
+      Math.random() * 100 + "%";
+
+    piece.style.animationDelay =
+      Math.random() * 2 + "s";
+
+    piece.style.fontSize =
+      15 + Math.random() * 20 + "px";
+
+    confetti.appendChild(piece);
+  }
+
+}
+
+</script>
+
+</body>
+</html>
